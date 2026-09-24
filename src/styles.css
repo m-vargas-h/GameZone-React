@@ -1,0 +1,432 @@
+/* --- Importación de fuente desde Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+
+/* --- Variables de paleta de colores --- */
+:root {
+    --color-fondo: #1e1e2e;
+    --color-fondo-nav: #16161f;
+    --color-fondo-card: #2a2a3e;
+    --color-fondo-header: #16161f;
+    --color-fondo-carrito: #1a1a2e;
+    --color-texto: #e0e0e0;
+    --color-texto-secundario: #a0a0b0;
+    --color-acento: #7c6af7;
+    --color-acento-hover: #5f4fd6;
+    --color-borde: #3a3a4e;
+    --color-error: #ff6b6b;
+    --color-exito: #6bffb8;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', Arial, sans-serif;
+    font-size: 17px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+}
+
+.principal {
+    display: flex;
+    flex-direction: column;
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+header {
+    padding: 70px 30px 40px 30px;
+    margin: 0;
+    border-bottom: 2px solid var(--color-borde);
+    background: linear-gradient(135deg, var(--color-fondo-header) 60%, #1a1a2e);
+}
+
+.site-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    color: var(--color-acento);
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(124, 106, 247, 0.6);
+}
+
+.site-description {
+    margin: 0;
+    padding: 0;
+    color: var(--color-texto-secundario);
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+/* =============================================
+   LAYOUT PRINCIPAL
+   ============================================= */
+.contenido {
+    display: flex;
+    flex-direction: row;
+    min-height: 60vh;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    margin: 10px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+section h2 {
+    color: var(--color-acento);
+    font-size: 22px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--color-borde);
+    padding-bottom: 6px;
+    margin-bottom: 15px;
+}
+
+/* =============================================
+   NAVBAR
+   ============================================= */
+#navbar-principal {
+    background-color: var(--color-fondo-nav);
+    border-bottom: 1px solid var(--color-borde);
+    padding: 10px 20px;
+}
+
+#navbar-principal .navbar-brand {
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(124, 106, 247, 0.6);
+}
+
+#navbar-principal .nav-link {
+    color: var(--color-texto);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+#navbar-principal .nav-link:hover {
+    color: var(--color-acento);
+}
+
+#navbar-principal .navbar-toggler {
+    border-color: var(--color-borde);
+}
+
+#navbar-principal .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(224, 224, 224, 0.85)' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* =============================================
+   CAROUSEL
+   ============================================= */
+.carousel-item img {
+    height: 420px;
+    object-fit: cover;
+}
+
+.carousel-caption h5 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.carousel-caption p {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--color-texto-secundario);
+}
+
+/* =============================================
+   CARDS DE PRODUCTOS
+   ============================================= */
+.card-gamezone {
+    background-color: var(--color-fondo-card);
+    border: 1px solid var(--color-borde);
+    color: var(--color-texto);
+}
+
+.card-gamezone .card-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-acento);
+}
+
+.card-gamezone .card-text {
+    font-size: 0.95rem;
+    color: var(--color-texto-secundario);
+}
+
+.card-gamezone .card-img-top {
+    height: 240px;
+    object-fit: cover;
+    object-position: top center;
+}
+
+.precio-card {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-exito);
+    margin: 8px 0;
+}
+
+/* =============================================
+   BOTONES
+   ============================================= */
+.btn-gamezone {
+    background-color: var(--color-acento);
+    color: #ffffff;
+    border: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+}
+
+.btn-gamezone:hover {
+    background-color: var(--color-acento-hover);
+    color: #ffffff;
+}
+
+/* Botón agregar al carrito */
+.btn-carrito {
+    background-color: transparent;
+    color: var(--color-acento);
+    border: 1px solid var(--color-acento);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 6px 10px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.btn-carrito:hover {
+    background-color: var(--color-acento);
+    color: #ffffff;
+}
+
+/* Pills de filtro */
+.btn-filtro {
+    background-color: transparent;
+    color: var(--color-texto-secundario);
+    border: 1px solid var(--color-borde);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 4px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-filtro:hover {
+    border-color: var(--color-acento);
+    color: var(--color-acento);
+}
+
+.btn-filtro.active {
+    background-color: var(--color-acento);
+    border-color: var(--color-acento);
+    color: #ffffff;
+}
+
+/* =============================================
+   BÚSQUEDA
+   ============================================= */
+.form-control-gamezone {
+    background-color: var(--color-fondo-card);
+    color: var(--color-texto);
+    border: 1px solid var(--color-borde);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 100%;
+}
+
+.form-control-gamezone::placeholder {
+    color: var(--color-texto-secundario);
+}
+
+.form-control-gamezone:focus {
+    outline: none;
+    border-color: var(--color-acento);
+    box-shadow: 0 0 0 3px rgba(124, 106, 247, 0.2);
+    background-color: var(--color-fondo-card);
+    color: var(--color-texto);
+}
+
+/* =============================================
+   CARRITO
+   ============================================= */
+#carrito {
+    background-color: var(--color-fondo-carrito);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.lista-carrito-items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+}
+
+.carrito-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-borde);
+    flex-wrap: wrap;
+}
+
+.carrito-nombre {
+    flex-grow: 1;
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+.carrito-cantidad {
+    color: var(--color-texto-secundario);
+    font-size: 0.9rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+.carrito-subtotal {
+    color: var(--color-exito);
+    font-weight: 700;
+    min-width: 80px;
+    text-align: right;
+}
+
+.btn-eliminar {
+    background: none;
+    border: none;
+    color: var(--color-error);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: rgba(255, 107, 107, 0.15);
+}
+
+.total-carrito {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-texto);
+    margin: 12px 0 0 0;
+    text-align: right;
+}
+
+.total-carrito span {
+    color: var(--color-exito);
+}
+
+/* =============================================
+   FILTROS — LABEL
+   ============================================= */
+.label-filtro {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-texto-secundario);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* =============================================
+   TEXTOS DE ESTADO
+   ============================================= */
+.texto-secundario {
+    color: var(--color-texto-secundario);
+}
+
+.texto-error {
+    color: var(--color-error);
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer {
+    padding: 30px 20px;
+    margin: 0;
+    border-top: 2px solid var(--color-acento);
+    background: linear-gradient(135deg, #1a1a2e, var(--color-fondo-header));
+    color: var(--color-texto-secundario);
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+footer h2 {
+    color: var(--color-acento);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0;
+}
+
+footer li {
+    padding: 3px 0;
+}
+
+footer a {
+    color: var(--color-acento);
+    text-decoration: none;
+}
+
+footer a:hover {
+    opacity: 0.8;
+}
+
+footer p {
+    color: var(--color-texto-secundario);
+    font-size: 0.9rem;
+}
+
+/* =============================================
+   ACCESIBILIDAD
+   ============================================= */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--color-acento);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 480px) {
+    main {
+        margin: 0;
+        padding: 15px;
+    }
+
+    .carousel-item img {
+        height: 200px;
+    }
+
+    .carrito-item {
+        gap: 8px;
+    }
+
+    .carrito-subtotal {
+        min-width: 60px;
+    }
+}
