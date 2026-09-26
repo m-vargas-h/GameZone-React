@@ -1,6 +1,48 @@
 import { useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Carousel from './components/Carousel'
+import FeaturedProducts from './components/FeaturedProducts'
+import SearchBar from './components/SearchBar'
 import ProductList from './components/ProductList'
 import ShoppingCart from './components/ShoppingCart'
+import Footer from './components/Footer'
+import Contacto from './pages/Contacto'
+
+function Home({ carrito, agregarAlCarrito, eliminarDelCarrito, modificarCantidad }) {
+  return (
+    <div className="principal">
+      <Navbar />
+
+      <header>
+        <h1 className="site-title">🎮 GameZone</h1>
+        <p className="site-description">Tu tienda de videojuegos favorita. Encuentra los mejores títulos para todas las plataformas.</p>
+      </header>
+
+      <Carousel />
+
+      <div className="contenido">
+        <main>
+          <section id="inicio">
+            <h2>Bienvenido a GameZone</h2>
+            <p>Somos una tienda especializada en videojuegos para PS5, Xbox Series X, Nintendo Switch y PC. Contamos con los últimos lanzamientos y los clásicos más queridos.</p>
+          </section>
+
+          <SearchBar agregarAlCarrito={agregarAlCarrito} />
+          <FeaturedProducts agregarAlCarrito={agregarAlCarrito} />
+          <ShoppingCart
+            carrito={carrito}
+            eliminarDelCarrito={eliminarDelCarrito}
+            modificarCantidad={modificarCantidad}
+          />
+          <ProductList agregarAlCarrito={agregarAlCarrito} />
+        </main>
+      </div>
+
+      <Footer />
+    </div>
+  )
+}
 
 function App() {
   const [carrito, setCarrito] = useState([])
@@ -19,7 +61,6 @@ function App() {
     })
   }
 
-  // Si la cantidad llega a 0, elimina el producto
   function modificarCantidad(id, delta) {
     setCarrito((prev) =>
       prev
@@ -35,28 +76,20 @@ function App() {
   }
 
   return (
-    <div className="principal">
-      <header>
-        <h1 className="site-title">🎮 GameZone</h1>
-        <p className="site-description">Tu tienda de videojuegos online</p>
-      </header>
-
-      <div className="contenido">
-        <main>
-          <ProductList agregarAlCarrito={agregarAlCarrito} />
-          <ShoppingCart
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Home
             carrito={carrito}
+            agregarAlCarrito={agregarAlCarrito}
             eliminarDelCarrito={eliminarDelCarrito}
             modificarCantidad={modificarCantidad}
           />
-        </main>
-      </div>
-
-      <footer>
-        <h2>GameZone</h2>
-        <p>© 2025 GameZone — Todos los derechos reservados</p>
-      </footer>
-    </div>
+        }
+      />
+      <Route path="/contacto" element={<Contacto />} />
+    </Routes>
   )
 }
 

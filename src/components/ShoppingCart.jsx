@@ -12,7 +12,9 @@ function ShoppingCart({ carrito, eliminarDelCarrito, modificarCantidad }) {
     <section id="carrito">
       <h2>🛒 Carrito
         {carrito.length > 0 && (
-          <span className="badge bg-primary ms-2">{carrito.length}</span>
+          <span className="badge bg-primary ms-2">
+            {carrito.reduce((acc, item) => acc + item.cantidad, 0)}
+          </span>
         )}
       </h2>
 
