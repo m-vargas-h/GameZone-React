@@ -430,3 +430,13 @@ button:focus-visible {
         min-width: 60px;
     }
 }
+
+/* Override Bootstrap */
+body {
+    background-color: var(--color-fondo) !important;
+}
+
+.card {
+    background-color: var(--color-fondo-card) !important;
+    border-color: var(--color-borde) !important;
+}

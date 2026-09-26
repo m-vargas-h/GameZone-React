@@ -5,7 +5,6 @@ import ShoppingCart from './components/ShoppingCart'
 function App() {
   const [carrito, setCarrito] = useState([])
 
-  // Agrega producto al carrito; si ya existe, aumenta la cantidad
   function agregarAlCarrito(producto) {
     setCarrito((prev) => {
       const existe = prev.find((item) => item.id === producto.id)
@@ -20,24 +19,43 @@ function App() {
     })
   }
 
-  // Elimina completamente un producto del carrito
+  // Si la cantidad llega a 0, elimina el producto
+  function modificarCantidad(id, delta) {
+    setCarrito((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, cantidad: item.cantidad + delta } : item
+        )
+        .filter((item) => item.cantidad > 0)
+    )
+  }
+
   function eliminarDelCarrito(id) {
     setCarrito((prev) => prev.filter((item) => item.id !== id))
   }
 
   return (
-    <div className="container-fluid">
-      <header className="py-3 mb-4">
-        <h1 className="text-center">🎮 GameZone</h1>
+    <div className="principal">
+      <header>
+        <h1 className="site-title">🎮 GameZone</h1>
+        <p className="site-description">Tu tienda de videojuegos online</p>
       </header>
 
-      <main className="container">
-        <ProductList agregarAlCarrito={agregarAlCarrito} />
-        <ShoppingCart
-          carrito={carrito}
-          eliminarDelCarrito={eliminarDelCarrito}
-        />
-      </main>
+      <div className="contenido">
+        <main>
+          <ProductList agregarAlCarrito={agregarAlCarrito} />
+          <ShoppingCart
+            carrito={carrito}
+            eliminarDelCarrito={eliminarDelCarrito}
+            modificarCantidad={modificarCantidad}
+          />
+        </main>
+      </div>
+
+      <footer>
+        <h2>GameZone</h2>
+        <p>© 2025 GameZone — Todos los derechos reservados</p>
+      </footer>
     </div>
   )
 }

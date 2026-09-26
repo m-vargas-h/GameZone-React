@@ -1,6 +1,5 @@
 import productos from '../data/productos.json'
 
-// Formatea precio en CLP
 function formatearPrecio(precio) {
   return precio === 0 ? 'Gratis' : '$' + precio.toLocaleString('es-CL')
 }
@@ -8,11 +7,11 @@ function formatearPrecio(precio) {
 function ProductList({ agregarAlCarrito }) {
   return (
     <section>
-      <h2 className="mb-4">Catálogo de Juegos</h2>
+      <h2>Catálogo de Juegos</h2>
       <div className="row g-4">
         {productos.map((producto) => (
           <div key={producto.id} className="col-12 col-md-6 col-lg-4">
-            <div className="card h-100">
+            <div className="card card-gamezone h-100">
               <img
                 src={producto.imagen}
                 className="card-img-top"
@@ -20,19 +19,19 @@ function ProductList({ agregarAlCarrito }) {
                 onError={(e) => { e.target.src = 'https://placehold.co/400x240?text=GameZone' }}
               />
               <div className="card-body d-flex flex-column">
-                <h3 className="h5 card-title">{producto.nombre}</h3>
+                <h3 className="card-title">{producto.nombre}</h3>
                 <p className="card-text">{producto.descripcion}</p>
-                <p className="mb-1">
-                  <span className="text-decoration-line-through text-muted me-2">
+                <p className="precio-card">
+                  <span className="text-decoration-line-through texto-secundario me-2" style={{fontSize: '0.9rem'}}>
                     {formatearPrecio(producto.precio)}
                   </span>
-                  <strong>{formatearPrecio(producto.precioOferta)}</strong>
+                  {formatearPrecio(producto.precioOferta)}
                 </p>
                 <button
-                  className="btn btn-primary mt-auto"
+                  className="btn-carrito mt-auto"
                   onClick={() => agregarAlCarrito(producto)}
                 >
-                  + Carrito
+                  + Agregar al carrito
                 </button>
               </div>
             </div>
