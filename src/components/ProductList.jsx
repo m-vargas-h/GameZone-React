@@ -1,10 +1,11 @@
 import productos from '../data/productos.json'
 
+// Formatea precio en CLP
 function formatearPrecio(precio) {
   return precio === 0 ? 'Gratis' : '$' + precio.toLocaleString('es-CL')
 }
 
-function ProductList() {
+function ProductList({ agregarAlCarrito }) {
   return (
     <section>
       <h2 className="mb-4">Catálogo de Juegos</h2>
@@ -27,7 +28,10 @@ function ProductList() {
                   </span>
                   <strong>{formatearPrecio(producto.precioOferta)}</strong>
                 </p>
-                <button className="btn btn-primary mt-auto">
+                <button
+                  className="btn btn-primary mt-auto"
+                  onClick={() => agregarAlCarrito(producto)}
+                >
                   + Carrito
                 </button>
               </div>
