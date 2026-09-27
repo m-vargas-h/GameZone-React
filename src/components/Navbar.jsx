@@ -1,11 +1,22 @@
-import { Link } from 'react-router-dom'
-
-function scrollTo(id) {
-  const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
-}
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 function Navbar() {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  function scrollTo(id) {
+    if (location.pathname !== '/') {
+      navigate('/')
+      setTimeout(() => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    } else {
+      const el = document.getElementById(id)
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <nav className="navbar navbar-expand-md" id="navbar-principal">
       <div className="container-fluid">
