@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom'
 
+function scrollTo(id) {
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
+}
+
 function Navbar() {
   return (
     <nav className="navbar navbar-expand-md" id="navbar-principal">
@@ -20,11 +25,21 @@ function Navbar() {
 
         <div className="collapse navbar-collapse" id="menuPrincipal">
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item"><a className="nav-link" href="#inicio">Inicio</a></li>
-            <li className="nav-item"><a className="nav-link" href="#destacados">Destacados</a></li>
-            <li className="nav-item"><a className="nav-link" href="#catalogo">Catálogo</a></li>
-            <li className="nav-item"><a className="nav-link" href="#carrito">Carrito</a></li>
-            <li className="nav-item"><Link className="nav-link" to="/contacto">Contacto</Link></li>
+            <li className="nav-item">
+              <button className="nav-link btn btn-link" onClick={() => scrollTo('inicio')}>Inicio</button>
+            </li>
+            <li className="nav-item">
+              <button className="nav-link btn btn-link" onClick={() => scrollTo('destacados')}>Destacados</button>
+            </li>
+            <li className="nav-item">
+              <button className="nav-link btn btn-link" onClick={() => scrollTo('catalogo')}>Catálogo</button>
+            </li>
+            <li className="nav-item">
+              <button className="nav-link btn btn-link" onClick={() => scrollTo('carrito')}>Carrito</button>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/contacto">Contacto</Link>
+            </li>
           </ul>
         </div>
       </div>
