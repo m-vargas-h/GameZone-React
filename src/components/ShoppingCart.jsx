@@ -1,8 +1,8 @@
-function formatearPrecio(precio) {
-  return precio === 0 ? 'Gratis' : '$' + precio.toLocaleString('es-CL')
-}
+import { formatearPrecio } from '../utils/formato'
 
+// Carrito de compras: lista los ítems, permite ajustar cantidades y muestra el total
 function ShoppingCart({ carrito, eliminarDelCarrito, modificarCantidad }) {
+  // Total = suma de (precio oferta x cantidad) de cada ítem
   const total = carrito.reduce(
     (acc, item) => acc + item.precioOferta * item.cantidad,
     0
@@ -18,6 +18,7 @@ function ShoppingCart({ carrito, eliminarDelCarrito, modificarCantidad }) {
         )}
       </h2>
 
+      {/* Renderizado condicional: carrito vacío o lista de ítems */}
       {carrito.length === 0 ? (
         <p className="texto-secundario">Tu carrito está vacío.</p>
       ) : (

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ProductCard from './ProductCard'
 
+// Búsqueda por nombre o categoría; guarda término, resultados y si ya se buscó
 function SearchBar({ productos, carrito, agregarAlCarrito }) {
   const [termino, setTermino] = useState('')
   const [resultados, setResultados] = useState([])

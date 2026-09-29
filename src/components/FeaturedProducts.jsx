@@ -1,5 +1,6 @@
 import ProductCard from './ProductCard'
 
+// Muestra solo los productos marcados como destacados en el catálogo
 function FeaturedProducts({ productos, carrito, agregarAlCarrito }) {
   const destacados = productos.filter((p) => p.destacado === true)
 

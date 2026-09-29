@@ -4,6 +4,7 @@ import ProductCard from './ProductCard'
 const plataformas = ['Todos', 'PS5', 'Xbox', 'Switch', 'PC']
 const generos = ['Todos', 'Acción', 'RPG', 'Deportes', 'Estrategia', 'Simulación', 'Carreras']
 
+// Catálogo completo con filtros combinables por plataforma y género
 function ProductList({ productos, carrito, agregarAlCarrito }) {
   const [filtroPlataforma, setFiltroPlataforma] = useState('Todos')
   const [filtroGenero, setFiltroGenero] = useState('Todos')

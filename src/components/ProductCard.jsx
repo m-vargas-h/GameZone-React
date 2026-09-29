@@ -1,8 +1,6 @@
-function formatearPrecio(precio) {
-  if (precio === 0) return 'Gratis'
-  return '$' + precio.toLocaleString('es-CL')
-}
+import { formatearPrecio } from '../utils/formato'
 
+// Card reutilizable: muestra un juego y su botón de carrito según si ya fue agregado
 function ProductCard({ producto, carrito, agregarAlCarrito }) {
   // Renderizado condicional: ¿el producto ya está en el carrito?
   const enCarrito = carrito.some((item) => item.id === producto.id)
