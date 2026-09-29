@@ -471,3 +471,10 @@ body {
   border-color: var(--color-acento) !important;
   color: #ffffff !important;
 }
+
+/* Botón del carrito cuando el producto ya fue agregado */
+.btn-carrito.en-carrito {
+  background-color: transparent;
+  color: var(--color-acento);
+  border: 1px solid var(--color-acento);
+}

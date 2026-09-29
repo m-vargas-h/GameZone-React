@@ -3,7 +3,10 @@ function formatearPrecio(precio) {
   return '$' + precio.toLocaleString('es-CL')
 }
 
-function ProductCard({ producto, agregarAlCarrito }) {
+function ProductCard({ producto, carrito, agregarAlCarrito }) {
+  // Renderizado condicional: ¿el producto ya está en el carrito?
+  const enCarrito = carrito.some((item) => item.id === producto.id)
+
   function handleMouseOver(e) {
     e.currentTarget.style.borderColor = 'var(--color-acento)'
     e.currentTarget.style.transform = 'translateY(-4px)'
@@ -37,8 +40,11 @@ function ProductCard({ producto, agregarAlCarrito }) {
             <a href={producto.url} target="_blank" rel="noopener noreferrer" className="btn btn-gamezone flex-grow-1">
               Ver mas
             </a>
-            <button className="btn-carrito" onClick={() => agregarAlCarrito(producto)}>
-              + Carrito
+            <button
+              className={`btn-carrito ${enCarrito ? 'en-carrito' : ''}`}
+              onClick={() => agregarAlCarrito(producto)}
+            >
+              {enCarrito ? '✓ En el carrito' : '+ Carrito'}
             </button>
           </div>
         </div>

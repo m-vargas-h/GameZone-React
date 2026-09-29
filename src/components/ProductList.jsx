@@ -4,7 +4,7 @@ import ProductCard from './ProductCard'
 const plataformas = ['Todos', 'PS5', 'Xbox', 'Switch', 'PC']
 const generos = ['Todos', 'Acción', 'RPG', 'Deportes', 'Estrategia', 'Simulación', 'Carreras']
 
-function ProductList({ productos, agregarAlCarrito }) {
+function ProductList({ productos, carrito, agregarAlCarrito }) {
   const [filtroPlataforma, setFiltroPlataforma] = useState('Todos')
   const [filtroGenero, setFiltroGenero] = useState('Todos')
 
@@ -60,6 +60,7 @@ function ProductList({ productos, agregarAlCarrito }) {
             <ProductCard
               key={producto.id}
               producto={producto}
+              carrito={carrito}
               agregarAlCarrito={agregarAlCarrito}
             />
           ))}

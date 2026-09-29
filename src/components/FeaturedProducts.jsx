@@ -1,6 +1,6 @@
 import ProductCard from './ProductCard'
 
-function FeaturedProducts({ productos, agregarAlCarrito }) {
+function FeaturedProducts({ productos, carrito, agregarAlCarrito }) {
   const destacados = productos.filter((p) => p.destacado === true)
 
   return (
@@ -12,6 +12,7 @@ function FeaturedProducts({ productos, agregarAlCarrito }) {
           <ProductCard
             key={producto.id}
             producto={producto}
+            carrito={carrito}
             agregarAlCarrito={agregarAlCarrito}
           />
         ))}
