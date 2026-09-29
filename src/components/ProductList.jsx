@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import productos from '../data/productos.json'
 import ProductCard from './ProductCard'
 
 const plataformas = ['Todos', 'PS5', 'Xbox', 'Switch', 'PC']
 const generos = ['Todos', 'Acción', 'RPG', 'Deportes', 'Estrategia', 'Simulación', 'Carreras']
 
-function ProductList({ agregarAlCarrito }) {
+function ProductList({ productos, agregarAlCarrito }) {
   const [filtroPlataforma, setFiltroPlataforma] = useState('Todos')
   const [filtroGenero, setFiltroGenero] = useState('Todos')
 

@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import productos from '../data/productos.json'
 import ProductCard from './ProductCard'
 
-function SearchBar({ agregarAlCarrito }) {
+function SearchBar({ productos, agregarAlCarrito }) {
   const [termino, setTermino] = useState('')
   const [resultados, setResultados] = useState([])
   const [buscado, setBuscado] = useState(false)

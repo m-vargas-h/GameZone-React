@@ -1,7 +1,6 @@
-import productos from '../data/productos.json'
 import ProductCard from './ProductCard'
 
-function FeaturedProducts({ agregarAlCarrito }) {
+function FeaturedProducts({ productos, agregarAlCarrito }) {
   const destacados = productos.filter((p) => p.destacado === true)
 
   return (
