@@ -183,18 +183,18 @@ section h2 {
 
 /* =============================================
    BOTONES
+   (!important: para ganar a los estados :active/:focus de Bootstrap)
    ============================================= */
-.btn-gamezone {
-    background-color: var(--color-acento);
-    color: #ffffff;
-    border: none;
+.btn.btn-gamezone {
+    background-color: var(--color-acento) !important;
+    color: #ffffff !important;
+    border: none !important;
     font-family: 'Rajdhani', sans-serif;
     font-weight: 600;
 }
 
-.btn-gamezone:hover {
-    background-color: var(--color-acento-hover);
-    color: #ffffff;
+.btn.btn-gamezone:hover {
+    background-color: var(--color-acento-hover) !important;
 }
 
 /* Botón agregar al carrito */
@@ -215,11 +215,23 @@ section h2 {
     color: #ffffff;
 }
 
+/* Botón cuando el producto ya está en el carrito */
+.btn-carrito.en-carrito {
+    background-color: rgba(107, 255, 184, 0.12);
+    color: var(--color-exito);
+    border-color: var(--color-exito);
+}
+
+.btn-carrito.en-carrito:hover {
+    background-color: rgba(107, 255, 184, 0.25);
+    color: var(--color-exito);
+}
+
 /* Pills de filtro */
-.btn-filtro {
-    background-color: transparent;
-    color: var(--color-texto-secundario);
-    border: 1px solid var(--color-borde);
+.btn.btn-filtro {
+    background-color: transparent !important;
+    color: var(--color-texto-secundario) !important;
+    border: 1px solid var(--color-borde) !important;
     font-family: 'Rajdhani', sans-serif;
     font-weight: 600;
     border-radius: 20px;
@@ -228,19 +240,19 @@ section h2 {
     transition: all 0.2s ease;
 }
 
-.btn-filtro:hover {
-    border-color: var(--color-acento);
-    color: var(--color-acento);
+.btn.btn-filtro:hover {
+    border-color: var(--color-acento) !important;
+    color: var(--color-acento) !important;
 }
 
-.btn-filtro.active {
-    background-color: var(--color-acento);
-    border-color: var(--color-acento);
-    color: #ffffff;
+.btn.btn-filtro.active {
+    background-color: var(--color-acento) !important;
+    border-color: var(--color-acento) !important;
+    color: #ffffff !important;
 }
 
 /* =============================================
-   BÚSQUEDA
+   BÚSQUEDA / INPUTS
    ============================================= */
 .form-control-gamezone {
     background-color: var(--color-fondo-card);
@@ -268,11 +280,29 @@ section h2 {
 /* =============================================
    CARRITO
    ============================================= */
-#carrito {
+/* Contenido del carrito en la página /carrito */
+.seccion-carrito {
     background-color: var(--color-fondo-carrito);
     border: 1px solid var(--color-borde);
     border-radius: 8px;
     padding: 20px;
+}
+
+/* Contenido del carrito dentro del panel lateral (sin caja propia) */
+.carrito-en-panel {
+    margin-bottom: 0;
+}
+
+/* Panel lateral (Offcanvas de Bootstrap) */
+.panel-carrito {
+    --bs-offcanvas-width: 420px;
+    --bs-offcanvas-bg: var(--color-fondo-carrito);
+    --bs-offcanvas-color: var(--color-texto);
+    border-left: 1px solid var(--color-borde);
+}
+
+.panel-carrito .offcanvas-header {
+    border-bottom: 1px solid var(--color-borde);
 }
 
 .lista-carrito-items {
@@ -433,48 +463,4 @@ button:focus-visible {
     .carrito-subtotal {
         min-width: 60px;
     }
-}
-
-/* Override Bootstrap en inputs y botones */
-body {
-  background-color: var(--color-fondo) !important;
-}
-
-.card {
-  background-color: var(--color-fondo-card) !important;
-  border-color: var(--color-borde) !important;
-}
-
-.btn.btn-gamezone {
-  background-color: var(--color-acento) !important;
-  color: #ffffff !important;
-  border: none !important;
-}
-
-.btn.btn-gamezone:hover {
-  background-color: var(--color-acento-hover) !important;
-}
-
-.btn.btn-filtro {
-  background-color: transparent !important;
-  color: var(--color-texto-secundario) !important;
-  border: 1px solid var(--color-borde) !important;
-}
-
-.btn.btn-filtro:hover {
-  border-color: var(--color-acento) !important;
-  color: var(--color-acento) !important;
-}
-
-.btn.btn-filtro.active {
-  background-color: var(--color-acento) !important;
-  border-color: var(--color-acento) !important;
-  color: #ffffff !important;
-}
-
-/* Botón del carrito cuando el producto ya fue agregado */
-.btn-carrito.en-carrito {
-  background-color: transparent;
-  color: var(--color-acento);
-  border: 1px solid var(--color-acento);
 }

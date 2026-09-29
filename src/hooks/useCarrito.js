@@ -26,6 +26,9 @@ export function useCarrito() {
     }
   }, [carrito])
 
+  // Cantidad total de unidades (para el badge del navbar y del panel)
+  const cantidadTotal = carrito.reduce((acc, item) => acc + item.cantidad, 0)
+
   function agregarAlCarrito(producto) {
     setCarrito((prev) => {
       const existe = prev.find((item) => item.id === producto.id)
@@ -54,5 +57,5 @@ export function useCarrito() {
     setCarrito((prev) => prev.filter((item) => item.id !== id))
   }
 
-  return { carrito, agregarAlCarrito, modificarCantidad, eliminarDelCarrito }
+  return { carrito, cantidadTotal, agregarAlCarrito, modificarCantidad, eliminarDelCarrito }
 }

@@ -1,7 +1,8 @@
 import { formatearPrecio } from '../utils/formato'
 
-// Carrito de compras: lista los ítems, permite ajustar cantidades y muestra el total
-function ShoppingCart({ carrito, eliminarDelCarrito, modificarCantidad }) {
+// Contenido del carrito: ítems, cantidades y total.
+// Se reutiliza en el panel lateral (enPanel) y en la página /carrito
+function ShoppingCart({ carrito, eliminarDelCarrito, modificarCantidad, enPanel = false }) {
   // Total = suma de (precio oferta x cantidad) de cada ítem
   const total = carrito.reduce(
     (acc, item) => acc + item.precioOferta * item.cantidad,
@@ -9,15 +10,7 @@ function ShoppingCart({ carrito, eliminarDelCarrito, modificarCantidad }) {
   )
 
   return (
-    <section id="carrito">
-      <h2>🛒 Carrito
-        {carrito.length > 0 && (
-          <span className="badge bg-primary ms-2">
-            {carrito.reduce((acc, item) => acc + item.cantidad, 0)}
-          </span>
-        )}
-      </h2>
-
+    <section className={enPanel ? 'carrito-en-panel' : 'seccion-carrito'}>
       {/* Renderizado condicional: carrito vacío o lista de ítems */}
       {carrito.length === 0 ? (
         <p className="texto-secundario">Tu carrito está vacío.</p>

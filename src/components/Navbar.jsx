@@ -1,6 +1,6 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
-function Navbar() {
+function Navbar({ cantidadCarrito = 0 }) {
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -46,7 +46,15 @@ function Navbar() {
               <button className="nav-link btn btn-link" onClick={() => scrollTo('catalogo')}>Catálogo</button>
             </li>
             <li className="nav-item">
-              <button className="nav-link btn btn-link" onClick={() => scrollTo('carrito')}>Carrito</button>
+              <button
+                className="nav-link btn btn-link"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#panelCarrito"
+                aria-controls="panelCarrito"
+              >
+                Carrito
+                {cantidadCarrito > 0 && <span className="badge bg-primary ms-2">{cantidadCarrito}</span>}
+              </button>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/contacto">Contacto</Link>

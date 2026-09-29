@@ -6,7 +6,7 @@ function formatoEmailValido(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
-function Contacto() {
+function Contacto({ cantidadCarrito }) {
   const [campos, setCampos] = useState({ nombre: '', email: '', telefono: '', motivo: '', mensaje: '' })
   const [errores, setErrores] = useState({})
   const [enviado, setEnviado] = useState(false)
@@ -51,7 +51,7 @@ function Contacto() {
 
   return (
     <div className="principal">
-      <Navbar />
+      <Navbar cantidadCarrito={cantidadCarrito} />
 
       <header>
         <h1 className="site-title">📬 Contacto</h1>

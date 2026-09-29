@@ -6,20 +6,21 @@ import Carousel from './components/Carousel'
 import FeaturedProducts from './components/FeaturedProducts'
 import SearchBar from './components/SearchBar'
 import ProductList from './components/ProductList'
-import ShoppingCart from './components/ShoppingCart'
+import CarritoPanel from './components/CarritoPanel'
 import Footer from './components/Footer'
 import Contacto from './pages/Contacto'
+import CarritoPagina from './pages/CarritoPagina'
 
 function Home({
   productos, cargando, error, reintentar,
-  carrito, agregarAlCarrito, eliminarDelCarrito, modificarCantidad,
+  carrito, cantidadCarrito, agregarAlCarrito,
 }) {
   // El catálogo solo se muestra cuando los datos cargaron sin errores
   const catalogoListo = !cargando && !error
 
   return (
     <div className="principal">
-      <Navbar />
+      <Navbar cantidadCarrito={cantidadCarrito} />
 
       <header>
         <h1 className="site-title">🎮 GameZone</h1>
@@ -59,13 +60,6 @@ function Home({
           {catalogoListo && (
             <FeaturedProducts productos={productos} carrito={carrito} agregarAlCarrito={agregarAlCarrito} />
           )}
-
-          <ShoppingCart
-            carrito={carrito}
-            eliminarDelCarrito={eliminarDelCarrito}
-            modificarCantidad={modificarCantidad}
-          />
-
           {catalogoListo && (
             <ProductList productos={productos} carrito={carrito} agregarAlCarrito={agregarAlCarrito} />
           )}
@@ -85,7 +79,9 @@ function App() {
   const [intento, setIntento] = useState(0) // cambia al reintentar y vuelve a ejecutar el efecto
 
   // Carrito: estado, operaciones y persistencia encapsulados en el hook
-  const { carrito, agregarAlCarrito, modificarCantidad, eliminarDelCarrito } = useCarrito()
+  const {
+    carrito, cantidadTotal, agregarAlCarrito, modificarCantidad, eliminarDelCarrito,
+  } = useCarrito()
 
   // Efecto secundario: cargar el catálogo desde el JSON (al montar y en cada reintento)
   useEffect(() => {
@@ -119,24 +115,44 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Home
-            productos={productos}
-            cargando={cargando}
-            error={error}
-            reintentar={reintentar}
-            carrito={carrito}
-            agregarAlCarrito={agregarAlCarrito}
-            eliminarDelCarrito={eliminarDelCarrito}
-            modificarCantidad={modificarCantidad}
-          />
-        }
+    <>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              productos={productos}
+              cargando={cargando}
+              error={error}
+              reintentar={reintentar}
+              carrito={carrito}
+              cantidadCarrito={cantidadTotal}
+              agregarAlCarrito={agregarAlCarrito}
+            />
+          }
+        />
+        <Route path="/contacto" element={<Contacto cantidadCarrito={cantidadTotal} />} />
+        <Route
+          path="/carrito"
+          element={
+            <CarritoPagina
+              carrito={carrito}
+              cantidadCarrito={cantidadTotal}
+              eliminarDelCarrito={eliminarDelCarrito}
+              modificarCantidad={modificarCantidad}
+            />
+          }
+        />
+      </Routes>
+
+      {/* Panel lateral del carrito: un único panel disponible en todas las páginas */}
+      <CarritoPanel
+        carrito={carrito}
+        cantidadTotal={cantidadTotal}
+        eliminarDelCarrito={eliminarDelCarrito}
+        modificarCantidad={modificarCantidad}
       />
-      <Route path="/contacto" element={<Contacto />} />
-    </Routes>
+    </>
   )
 }
 
