@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { useCarrito } from './hooks/useCarrito'
 import Navbar from './components/Navbar'
 import Carousel from './components/Carousel'
 import FeaturedProducts from './components/FeaturedProducts'
@@ -83,8 +84,8 @@ function App() {
   const [error, setError] = useState(null)
   const [intento, setIntento] = useState(0) // cambia al reintentar y vuelve a ejecutar el efecto
 
-  // Estado del carrito
-  const [carrito, setCarrito] = useState([])
+  // Carrito: estado, operaciones y persistencia encapsulados en el hook
+  const { carrito, agregarAlCarrito, modificarCantidad, eliminarDelCarrito } = useCarrito()
 
   // Efecto secundario: cargar el catálogo desde el JSON (al montar y en cada reintento)
   useEffect(() => {
@@ -115,34 +116,6 @@ function App() {
     setError(null)
     setCargando(true)
     setIntento((n) => n + 1)
-  }
-
-  function agregarAlCarrito(producto) {
-    setCarrito((prev) => {
-      const existe = prev.find((item) => item.id === producto.id)
-      if (existe) {
-        return prev.map((item) =>
-          item.id === producto.id
-            ? { ...item, cantidad: item.cantidad + 1 }
-            : item
-        )
-      }
-      return [...prev, { ...producto, cantidad: 1 }]
-    })
-  }
-
-  function modificarCantidad(id, delta) {
-    setCarrito((prev) =>
-      prev
-        .map((item) =>
-          item.id === id ? { ...item, cantidad: item.cantidad + delta } : item
-        )
-        .filter((item) => item.cantidad > 0)
-    )
-  }
-
-  function eliminarDelCarrito(id) {
-    setCarrito((prev) => prev.filter((item) => item.id !== id))
   }
 
   return (
