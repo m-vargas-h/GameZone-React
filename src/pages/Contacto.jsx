@@ -37,7 +37,8 @@ function Contacto() {
     return nuevosErrores
   }
 
-  function handleEnviar() {
+  function handleEnviar(e) {
+    e.preventDefault() // evita la recarga de página al enviar el form
     const nuevosErrores = validar()
     setErrores(nuevosErrores)
 
@@ -68,7 +69,7 @@ function Contacto() {
               </div>
             )}
 
-            <div className="row g-3">
+            <form className="row g-3" onSubmit={handleEnviar} noValidate>
               <div className="col-12 col-md-6">
                 <label className="label-filtro d-block mb-1">Nombre *</label>
                 <input
@@ -139,11 +140,11 @@ function Contacto() {
               </div>
 
               <div className="col-12">
-                <button className="btn btn-gamezone" onClick={handleEnviar}>
+                <button type="submit" className="btn btn-gamezone">
                   Enviar mensaje
                 </button>
               </div>
-            </div>
+            </form>
           </section>
         </main>
       </div>

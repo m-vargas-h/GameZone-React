@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 
 const banners = [
-  { imagen: '/GameZone-React/img/banner-black-myth-wukong.jpg', titulo: 'Black Myth: Wukong', descripcion: 'La épica aventura del Rey Mono — PC / PS5' },
-  { imagen: '/GameZone-React/img/banner-ea-fc-25.jpg', titulo: 'EA FC 25', descripcion: 'El fútbol más realista de la generación — Multi' },
-  { imagen: '/GameZone-React/img/banner-nba-2k25.jpg', titulo: 'NBA 2K25', descripcion: 'Vive la experiencia NBA al máximo nivel — Multi' },
-  { imagen: '/GameZone-React/img/banner-baldurs-gate-3.jpg', titulo: "Baldur's Gate 3", descripcion: 'El RPG definitivo de la década — PC / PS5' },
-  { imagen: '/GameZone-React/img/banner-cities-skylines-2.jpg', titulo: 'Cities: Skylines II', descripcion: 'Construye y gestiona la ciudad de tus sueños — PC / Xbox' },
+  { imagen: 'img/banner-black-myth-wukong.jpg', titulo: 'Black Myth: Wukong', descripcion: 'La épica aventura del Rey Mono — PC / PS5' },
+  { imagen: 'img/banner-ea-fc-25.jpg', titulo: 'EA FC 25', descripcion: 'El fútbol más realista de la generación — Multi' },
+  { imagen: 'img/banner-nba-2k25.jpg', titulo: 'NBA 2K25', descripcion: 'Vive la experiencia NBA al máximo nivel — Multi' },
+  { imagen: 'img/banner-baldurs-gate-3.jpg', titulo: "Baldur's Gate 3", descripcion: 'El RPG definitivo de la década — PC / PS5' },
+  { imagen: 'img/banner-cities-skylines-2.jpg', titulo: 'Cities: Skylines II', descripcion: 'Construye y gestiona la ciudad de tus sueños — PC / Xbox' },
 ]
 
 function Carousel() {
@@ -36,7 +36,7 @@ function Carousel() {
         {banners.map((banner, i) => (
           <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''}`}>
             <img
-              src={banner.imagen}
+              src={`${import.meta.env.BASE_URL}${banner.imagen}`}
               className="d-block w-100"
               alt={`Banner de ${banner.titulo}`}
               onError={(e) => { e.target.src = 'https://placehold.co/1200x420?text=GameZone' }}

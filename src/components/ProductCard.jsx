@@ -20,7 +20,7 @@ function ProductCard({ producto, carrito, agregarAlCarrito }) {
     <div className="col-12 col-md-6 col-lg-4">
       <div className="card h-100 card-gamezone" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
         <img
-          src={producto.imagen}
+          src={`${import.meta.env.BASE_URL}${producto.imagen}`}
           className="card-img-top"
           alt="Portada del juego"
           onError={(e) => { e.target.src = 'https://placehold.co/400x240?text=GameZone' }}
