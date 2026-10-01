@@ -1,6 +1,6 @@
 # GameZone — React
 
-Tienda de videojuegos online desarrollada con React y Vite, como migración y mejora del proyecto anterior construido en HTML/CSS/JS. Permite explorar un catálogo de juegos, filtrarlos, buscarlos y agregarlos a un carrito de compras interactivo.
+Tienda de videojuegos online desarrollada con React y Vite, como migración y mejora del proyecto anterior construido en HTML/CSS/JS. Permite explorar un catálogo de juegos cargado dinámicamente, filtrarlos, buscarlos y agregarlos a un carrito de compras interactivo que se conserva al recargar la página.
 
 ---
 
@@ -12,11 +12,12 @@ Tienda de videojuegos online desarrollada con React y Vite, como migración y me
 
 ## Tecnologías utilizadas
 
-- **React 18** — librería principal para construcción de la UI
+- **React 19** — librería principal para construcción de la UI
 - **Vite** — entorno de desarrollo y bundler
 - **Bootstrap 5** — estilos y componentes de interfaz
-- **React Router DOM** — navegación entre páginas (Home y Contacto)
+- **React Router DOM** — navegación entre páginas (Home, Carrito y Contacto)
 - **JavaScript ES6+** — lógica de componentes y estado
+- **gh-pages** — publicación en GitHub Pages
 
 ---
 
@@ -24,8 +25,10 @@ Tienda de videojuegos online desarrollada con React y Vite, como migración y me
 
 ```
 ├── public
-│   ├── evidencias                  -> Evidencias para README
-│   ├── img                         -> Imágenes de portadas y banners
+│   ├── data
+│   │   └── productos.json              -> Catálogo de los 15 juegos, cargado con fetch
+│   ├── evidencias                      -> Evidencias para README
+│   ├── img                             -> Imágenes de portadas y banners
 │   ├── favicon.svg
 │   └── icons.svg
 ├── src
@@ -33,21 +36,25 @@ Tienda de videojuegos online desarrollada con React y Vite, como migración y me
 │   │   ├── hero.png
 │   │   └── vite.svg
 │   ├── components
-│   │   ├── Carousel.jsx            -> Carrusel de banners con Bootstrap
-│   │   ├── FeaturedProducts.jsx    -> Sección de productos destacados (destacado: true)
-│   │   ├── Footer.jsx              -> Pie de página con datos de contacto
-│   │   ├── Navbar.jsx              -> Barra de navegación con enlaces internos y a Contacto
-│   │   ├── ProductCard.jsx         -> Card reutilizable para cada juego
-│   │   ├── ProductList.jsx         -> Catálogo completo con filtros por plataforma y género
-│   │   ├── SearchBar.jsx           -> Búsqueda por nombre o categoría con renderizado condicional
-│   │   └── ShoppingCart.jsx        -> Carrito con cantidad, subtotales y total
-│   ├── data
-│   │   └── productos.json          -> Datos de los 15 juegos del catálogo
+│   │   ├── Carousel.jsx                -> Carrusel de banners con Bootstrap
+│   │   ├── CarritoPanel.jsx            -> Panel lateral del carrito
+│   │   ├── FeaturedProducts.jsx        -> Sección de productos destacados (destacado: true)
+│   │   ├── Footer.jsx                  -> Pie de página con datos de contacto
+│   │   ├── Navbar.jsx                  -> Navegación, acceso al carrito con badge de cantidad
+│   │   ├── ProductCard.jsx             -> Card reutilizable con botón de carrito condicional
+│   │   ├── ProductList.jsx             -> Catálogo completo con filtros por plataforma y género
+│   │   ├── SearchBar.jsx               -> Búsqueda por nombre o categoría con renderizado condicional
+│   │   └── ShoppingCart.jsx            -> Contenido del carrito (ítems, cantidades y total)
+│   ├── hooks
+│   │   └── useCarrito.js               -> Custom Hook: estado del carrito y persistencia en localStorage
 │   ├── pages
-│   │   └── Contacto.jsx            -> Página de contacto con validación de formulario
-│   ├── App.jsx                     -> Componente raíz con estado del carrito y rutas
-│   ├── main.jsx                    -> Punto de entrada, configuración de Bootstrap y Router
-│   └── styles.css                  -> Estilos personalizados con variables CSS
+│   │   ├── CarritoPagina.jsx           -> Página /carrito con el detalle completo
+│   │   └── Contacto.jsx                -> Página de contacto con validación de formulario
+│   ├── utils
+│   │   └── formato.js                  -> Formateo de precios
+│   ├── App.jsx                         -> Componente raíz: carga del catálogo, rutas y panel del carrito
+│   ├── main.jsx                        -> Punto de entrada, configuración de Bootstrap y Router
+│   └── styles.css                      -> Estilos personalizados con variables CSS
 ├── .gitattributes
 ├── .gitignore
 ├── README.md
@@ -64,7 +71,7 @@ Tienda de videojuegos online desarrollada con React y Vite, como migración y me
 
 ### 1. Catálogo de productos
 
-Listado de 15 juegos renderizado dinámicamente desde `productos.json` usando `.map()`. Cada card muestra nombre, descripción, imagen, precio normal tachado y precio oferta destacado. Componente `ProductCard` reutilizable en el catálogo, destacados y resultados de búsqueda.
+Listado de 15 juegos cargado dinámicamente con `fetch` dentro de un `useEffect` en `App`, desde `public/data/productos.json`, y renderizado con `.map()`. Cada card muestra nombre, descripción, imagen, precio normal tachado y precio oferta destacado. El componente `ProductCard` se reutiliza en el catálogo, destacados y resultados de búsqueda.
 
 ![Catálogo de productos](public/evidencias/catalogo.gif)
 
@@ -72,10 +79,13 @@ Listado de 15 juegos renderizado dinámicamente desde `productos.json` usando `.
 
 ### 2. Carrito de compras
 
-Permite agregar productos, modificar la cantidad con botones `+` y `−`, y eliminar ítems individualmente. El total se calcula con `.reduce()` sobre el precio oferta por cantidad. El badge del navbar muestra el total de unidades en el carrito.
-Ademas, cuando el carrito no tiene productos se muestra el mensaje "Tu carrito está vacío". Al agregar al menos un producto, el mensaje desaparece y se renderiza la lista de ítems con el total.
+El carrito se abre como un **panel lateral** desde el botón "Carrito" del navbar, disponible en todas las páginas. Permite modificar la cantidad con `+` y `−`, eliminar ítems y ver el total, calculado con `.reduce()` sobre el precio oferta por cantidad. El navbar muestra un badge con el total de unidades.
 
-![Carrito de compras](public/evidencias/carrito.gif)
+Desde el panel, el botón **Ver carrito** lleva a la página `/carrito`, con el mismo contenido en formato de página completa.
+
+El estado y las operaciones del carrito viven en el custom Hook `useCarrito`, que además guarda el contenido en `localStorage` con un `useEffect`, por lo que el carrito se conserva al recargar la página.
+
+![Carrito de compras](public/evidencias/carrito-funcional.png)
 
 ---
 
@@ -89,7 +99,7 @@ El catálogo se filtra en tiempo real usando `useState`. Los botones pill muestr
 
 ### 4. Búsqueda de juegos
 
-Busca por nombre o categoría sobre el array de productos local. Muestra resultados dinámicamente y mensajes de estado cuando no hay coincidencias o el campo está vacío (renderizado condicional con `useState`).
+Busca por nombre o categoría sobre el catálogo cargado. Muestra resultados dinámicamente y mensajes de estado cuando no hay coincidencias o el campo está vacío (renderizado condicional con `useState`).
 
 ![Búsqueda](public/evidencias/busqueda.gif)
 
@@ -97,9 +107,32 @@ Busca por nombre o categoría sobre el array de productos local. Muestra resulta
 
 ### 5. Formulario de contacto
 
-Página independiente accesible desde el navbar (`/contacto`). Valida nombre, correo, motivo y mensaje antes de enviar. Muestra errores inline por campo y un mensaje de confirmación tras el envío exitoso. Los campos se limpian automáticamente.
+Página independiente accesible desde el navbar (`/contacto`). El formulario usa `<form>` con `onSubmit`, por lo que también se envía con la tecla Enter. Valida nombre, correo, motivo y mensaje antes de enviar, muestra errores inline por campo y un mensaje de confirmación tras el envío exitoso. Los campos se limpian automáticamente.
 
 ![Formulario de contacto](public/evidencias/contacto.gif)
+
+---
+
+### 6. Hooks y renderizado condicional
+
+**Datos dinámicos con `useState` y `useEffect`.** `App` mantiene los estados `productos`, `cargando` y `error`. Un `useEffect` carga el catálogo con `fetch` al montar la aplicación y en cada reintento, con `AbortController` para limpiar la petición.
+
+![Datos dinámicos](public/evidencias/datos-dinamicos.png)
+
+**Renderizado condicional.**
+
+- Spinner "Cargando catálogo..." mientras se obtienen los datos.
+- Alerta con botón **Reintentar** si la carga falla.
+- Botón de cada card: "+ Carrito" cambia a "✓ En el carrito" si el juego ya fue agregado.
+- Mensaje "Tu carrito está vacío" y botón **Ver carrito** visible solo cuando hay productos.
+
+![Renderizado condicional](public/evidencias/renderizado-condicional.png)
+
+| Hook | Uso |
+|---|---|
+| `useState` | Catálogo, estados de carga y error, carrito, filtros, búsqueda y campos del formulario |
+| `useEffect` | Carga del catálogo con `fetch`, persistencia del carrito en `localStorage`, control del carrusel |
+| `useCarrito` (custom) | Encapsula el estado del carrito, sus operaciones y su persistencia |
 
 ---
 
@@ -107,12 +140,14 @@ Página independiente accesible desde el navbar (`/contacto`). Valida nombre, co
 
 | Componente | Descripción |
 |---|---|
-| `ProductCard` | Card de producto reutilizada en catálogo, destacados y búsqueda |
+| `App` | Carga el catálogo (`useEffect` + `fetch`), define las rutas y monta el panel del carrito |
+| `ProductCard` | Card de producto reutilizada en catálogo, destacados y búsqueda; su botón cambia según el carrito |
 | `ProductList` | Catálogo con filtros internos via `useState` |
-| `FeaturedProducts` | Filtra productos con `destacado: true` del JSON |
+| `FeaturedProducts` | Filtra productos con `destacado: true` |
 | `SearchBar` | Búsqueda con estado propio y resultados condicionales |
-| `ShoppingCart` | Recibe `carrito`, `eliminarDelCarrito` y `modificarCantidad` como props |
-| `App` | Estado global del carrito; pasa funciones como props a los componentes hijos |
+| `ShoppingCart` | Contenido del carrito, reutilizado en el panel lateral y en la página `/carrito` |
+| `CarritoPanel` | Panel lateral (Offcanvas) con el carrito y acceso a la página `/carrito` |
+| `Navbar` | Navegación y botón del carrito con badge de cantidad |
 
 ---
 
@@ -125,7 +160,7 @@ npm install
 npm run dev
 ```
 
-Abre [http://localhost:5173](http://localhost:5173) en el navegador.
+Abre [http://localhost:5173/GameZone-React/](http://localhost:5173/GameZone-React/) en el navegador.
 
 ---
 
@@ -135,17 +170,22 @@ Abre [http://localhost:5173](http://localhost:5173) en el navegador.
 npm run deploy
 ```
 
-Esto genera el build en `/dist` y lo publica automáticamente en la rama `gh-pages`.
+Esto genera el build en `/dist` y lo publica automáticamente en la rama `gh-pages`. La configuración para React incluye `base: '/GameZone-React/'` en `vite.config.js` y `HashRouter`, para que las rutas funcionen al recargar en GitHub Pages.
 
 ---
 
 ## Decisiones de diseño
 
+### Rutas de imágenes independientes del despliegue
+
+Las imágenes se referencian de forma relativa (`img/...`) en los datos y el carrusel, y se resuelven con `import.meta.env.BASE_URL` al renderizar. Así, un cambio en la ruta de despliegue solo requiere modificar `base` en `vite.config.js`.
+
 ### API externa GameBrain
 
-La versión anterior del proyecto integraba la API externa **GameBrain** para cargar juegos en tiempo real en la sección "Descubre más juegos". En esta migración a React se tomó la decisión de excluirla temporalmente por las siguientes razones:
-
-- Su integración en React requiere el hook `useEffect` para manejar efectos secundarios y llamadas asíncronas, por lo que su integración se trabajará en entregas posteriores.
-- La API presenta inestabilidad en producción, lo que podría afectar la experiencia en el entorno publicado en GitHub Pages.
+La versión anterior del proyecto integraba la API externa **GameBrain** para cargar juegos en tiempo real. En esta migración se excluyó por la inestabilidad que presentaba en producción. La carga del catálogo ya sigue el patrón `useEffect` + estados de carga, error y reintento, por lo que incorporar una API externa es el siguiente paso previsto para la entrega final.
 
 ---
+
+## Próximos pasos
+
+- Integrar una API externa para ampliar el catálogo, aprovechando la estructura de carga, error y reintento existente.
