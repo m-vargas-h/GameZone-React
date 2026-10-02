@@ -85,7 +85,7 @@ Desde el panel, el botón **Ver carrito** lleva a la página `/carrito`, con el 
 
 El estado y las operaciones del carrito viven en el custom Hook `useCarrito`, que además guarda el contenido en `localStorage` con un `useEffect`, por lo que el carrito se conserva al recargar la página.
 
-![Carrito de compras](public/evidencias/carrito-funcional.png)
+![Carrito de compras](public/evidencias/carrito.gif)
 
 ---
 
@@ -126,7 +126,9 @@ Página independiente accesible desde el navbar (`/contacto`). El formulario usa
 - Botón de cada card: "+ Carrito" cambia a "✓ En el carrito" si el juego ya fue agregado.
 - Mensaje "Tu carrito está vacío" y botón **Ver carrito** visible solo cuando hay productos.
 
-![Renderizado condicional](public/evidencias/renderizado-condicional.png)
+![Botón condicional en las cards](public/evidencias/renderizado-condicional.png)
+![Carrito vacío](public/evidencias/carrito-vacio.png)
+![Error de carga con reintento](public/evidencias/carga-error.png)
 
 | Hook | Uso |
 |---|---|
