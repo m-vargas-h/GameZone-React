@@ -10,10 +10,12 @@ import CarritoPanel from './components/CarritoPanel'
 import Footer from './components/Footer'
 import Contacto from './pages/Contacto'
 import CarritoPagina from './pages/CarritoPagina'
+import Admin from './pages/Admin'
 
 function Home({
   productos, cargando, error, reintentar,
   carrito, cantidadCarrito, agregarAlCarrito,
+  eliminarProducto,
 }) {
   // El catálogo solo se muestra cuando los datos cargaron sin errores
   const catalogoListo = !cargando && !error
@@ -61,7 +63,12 @@ function Home({
             <FeaturedProducts productos={productos} carrito={carrito} agregarAlCarrito={agregarAlCarrito} />
           )}
           {catalogoListo && (
-            <ProductList productos={productos} carrito={carrito} agregarAlCarrito={agregarAlCarrito} />
+            <ProductList
+              productos={productos}
+              carrito={carrito}
+              agregarAlCarrito={agregarAlCarrito}
+              eliminarProducto={eliminarProducto}
+            />
           )}
         </main>
       </div>
@@ -77,6 +84,9 @@ function App() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
   const [intento, setIntento] = useState(0) // cambia al reintentar y vuelve a ejecutar el efecto
+
+  // Sesión de administrador simulada (se mantiene mientras dure la pestaña)
+  const [esAdmin, setEsAdmin] = useState(() => sessionStorage.getItem('gamezone-admin') === 'true')
 
   // Carrito: estado, operaciones y persistencia encapsulados en el hook
   const {
@@ -114,6 +124,35 @@ function App() {
     setIntento((n) => n + 1)
   }
 
+  // Agrega un juego al catálogo (id autoincremental)
+  function agregarProducto(nuevo) {
+    setProductos((prev) => {
+      const id = prev.length ? Math.max(...prev.map((p) => p.id)) + 1 : 1
+      return [...prev, { ...nuevo, id }]
+    })
+  }
+
+  // Elimina un juego del catálogo y, si estaba, también del carrito
+  function eliminarProducto(id) {
+    setProductos((prev) => prev.filter((p) => p.id !== id))
+    eliminarDelCarrito(id)
+  }
+
+  // Login simulado: las credenciales están en el frontend (no es seguridad real)
+  function iniciarSesion(usuario, clave) {
+    if (usuario === 'admin' && clave === 'gamezone123') {
+      setEsAdmin(true)
+      sessionStorage.setItem('gamezone-admin', 'true')
+      return true
+    }
+    return false
+  }
+
+  function cerrarSesion() {
+    setEsAdmin(false)
+    sessionStorage.removeItem('gamezone-admin')
+  }
+
   return (
     <>
       <Routes>
@@ -128,6 +167,7 @@ function App() {
               carrito={carrito}
               cantidadCarrito={cantidadTotal}
               agregarAlCarrito={agregarAlCarrito}
+              eliminarProducto={esAdmin ? eliminarProducto : undefined}
             />
           }
         />
@@ -140,6 +180,18 @@ function App() {
               cantidadCarrito={cantidadTotal}
               eliminarDelCarrito={eliminarDelCarrito}
               modificarCantidad={modificarCantidad}
+            />
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <Admin
+              cantidadCarrito={cantidadTotal}
+              esAdmin={esAdmin}
+              iniciarSesion={iniciarSesion}
+              cerrarSesion={cerrarSesion}
+              agregarProducto={agregarProducto}
             />
           }
         />

@@ -5,7 +5,7 @@ const plataformas = ['Todos', 'PS5', 'Xbox', 'Switch', 'PC']
 const generos = ['Todos', 'Acción', 'RPG', 'Deportes', 'Estrategia', 'Simulación', 'Carreras']
 
 // Catálogo completo con filtros combinables por plataforma y género
-function ProductList({ productos, carrito, agregarAlCarrito }) {
+function ProductList({ productos, carrito, agregarAlCarrito, eliminarProducto }) {
   const [filtroPlataforma, setFiltroPlataforma] = useState('Todos')
   const [filtroGenero, setFiltroGenero] = useState('Todos')
 
@@ -63,6 +63,7 @@ function ProductList({ productos, carrito, agregarAlCarrito }) {
               producto={producto}
               carrito={carrito}
               agregarAlCarrito={agregarAlCarrito}
+              onEliminar={eliminarProducto}
             />
           ))}
         </div>
