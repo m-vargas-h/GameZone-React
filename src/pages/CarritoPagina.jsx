@@ -4,7 +4,7 @@ import Footer from '../components/Footer'
 import ShoppingCart from '../components/ShoppingCart'
 
 // Página aparte con el detalle completo del carrito
-function CarritoPagina({ carrito, cantidadCarrito, eliminarDelCarrito, modificarCantidad }) {
+function CarritoPagina({ carrito, cantidadCarrito, eliminarDelCarrito, modificarCantidad, vaciarCarrito }) {
   return (
     <div className="principal">
       <Navbar cantidadCarrito={cantidadCarrito} />
@@ -20,6 +20,7 @@ function CarritoPagina({ carrito, cantidadCarrito, eliminarDelCarrito, modificar
             carrito={carrito}
             eliminarDelCarrito={eliminarDelCarrito}
             modificarCantidad={modificarCantidad}
+            vaciarCarrito={vaciarCarrito}
           />
           <Link to="/" className="btn btn-gamezone">← Seguir comprando</Link>
         </main>

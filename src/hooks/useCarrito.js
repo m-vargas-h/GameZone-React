@@ -57,5 +57,10 @@ export function useCarrito() {
     setCarrito((prev) => prev.filter((item) => item.id !== id))
   }
 
-  return { carrito, cantidadTotal, agregarAlCarrito, modificarCantidad, eliminarDelCarrito }
+  // Vacía el carrito por completo
+  function vaciarCarrito() {
+    setCarrito([])
+  }
+
+  return { carrito, cantidadTotal, agregarAlCarrito, modificarCantidad, eliminarDelCarrito, vaciarCarrito }
 }

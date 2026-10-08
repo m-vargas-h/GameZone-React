@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import ShoppingCart from './ShoppingCart'
 
 // Panel lateral del carrito (Offcanvas de Bootstrap), disponible en todas las páginas
-function CarritoPanel({ carrito, cantidadTotal, eliminarDelCarrito, modificarCantidad }) {
+function CarritoPanel({ carrito, cantidadTotal, eliminarDelCarrito, modificarCantidad, vaciarCarrito }) {
   const navigate = useNavigate()
 
   return (
@@ -30,6 +30,7 @@ function CarritoPanel({ carrito, cantidadTotal, eliminarDelCarrito, modificarCan
           carrito={carrito}
           eliminarDelCarrito={eliminarDelCarrito}
           modificarCantidad={modificarCantidad}
+          vaciarCarrito={vaciarCarrito}
           enPanel
         />
 

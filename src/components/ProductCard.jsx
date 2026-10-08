@@ -2,7 +2,8 @@ import { formatearPrecio } from '../utils/formato'
 
 // Card reutilizable: muestra un juego y su botón de carrito según si ya fue agregado
 function ProductCard({ producto, carrito, agregarAlCarrito, onEliminar }) {
-  const enCarrito = carrito.some((item) => item.id === producto.id)
+  const itemEnCarrito = carrito.find((item) => item.id === producto.id)
+  const enCarrito = Boolean(itemEnCarrito)
   const srcImagen = producto.imagen.startsWith('http')
     ? producto.imagen
     : `${import.meta.env.BASE_URL}${producto.imagen}`
@@ -48,7 +49,7 @@ function ProductCard({ producto, carrito, agregarAlCarrito, onEliminar }) {
               className={`btn-carrito ${enCarrito ? 'en-carrito' : ''}`}
               onClick={() => agregarAlCarrito(producto)}
             >
-              {enCarrito ? '✓ En el carrito' : '+ Carrito'}
+              {enCarrito ? `✓ En el carrito (${itemEnCarrito.cantidad})` : '+ Carrito'}
             </button>
           </div>
           {onEliminar && (

@@ -90,7 +90,7 @@ function App() {
 
   // Carrito: estado, operaciones y persistencia encapsulados en el hook
   const {
-    carrito, cantidadTotal, agregarAlCarrito, modificarCantidad, eliminarDelCarrito,
+    carrito, cantidadTotal, agregarAlCarrito, modificarCantidad, eliminarDelCarrito, vaciarCarrito,
   } = useCarrito()
 
   // Elimina un juego del catálogo y, si estaba, también del carrito
@@ -126,6 +126,7 @@ function App() {
               cantidadCarrito={cantidadTotal}
               eliminarDelCarrito={eliminarDelCarrito}
               modificarCantidad={modificarCantidad}
+              vaciarCarrito={vaciarCarrito}
             />
           }
         />
@@ -149,6 +150,7 @@ function App() {
         cantidadTotal={cantidadTotal}
         eliminarDelCarrito={eliminarDelCarrito}
         modificarCantidad={modificarCantidad}
+        vaciarCarrito={vaciarCarrito}
       />
     </>
   )
