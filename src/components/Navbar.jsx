@@ -43,7 +43,7 @@ function Navbar({ cantidadCarrito = 0 }) {
               <button className="nav-link btn btn-link" onClick={() => scrollTo('destacados')}>Destacados</button>
             </li>
             <li className="nav-item">
-              <button className="nav-link btn btn-link" onClick={() => scrollTo('catalogo')}>Catálogo</button>
+              <Link className="nav-link" to="/catalogo">Catálogo</Link>
             </li>
             <li className="nav-item">
               <button

@@ -1,4 +1,6 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
+import EstadoCarga from './components/EstadoCarga'
+import Catalogo from './pages/Catalogo'
 import { useCarrito } from './hooks/useCarrito'
 import { useProductos } from './hooks/useProductos'
 import { useAdmin } from './hooks/useAdmin'
@@ -16,9 +18,7 @@ import Admin from './pages/Admin'
 function Home({
   productos, cargando, error, reintentar,
   carrito, cantidadCarrito, agregarAlCarrito,
-  eliminarProducto,
 }) {
-  // El catálogo solo se muestra cuando los datos cargaron sin errores
   const catalogoListo = !cargando && !error
 
   return (
@@ -39,38 +39,18 @@ function Home({
             <p>Somos una tienda especializada en videojuegos para PS5, Xbox Series X, Nintendo Switch y PC. Contamos con los últimos lanzamientos y los clásicos más queridos.</p>
           </section>
 
-          {/* Renderizado condicional: estado de carga */}
-          {cargando && (
-            <div className="text-center my-5">
-              <div className="spinner-border" role="status" aria-hidden="true"></div>
-              <p className="texto-secundario mt-3">Cargando catálogo...</p>
-            </div>
-          )}
-
-          {/* Renderizado condicional: estado de error */}
-          {!cargando && error && (
-            <div className="alert alert-danger my-4" role="alert">
-              <p className="mb-2">No se pudo cargar el catálogo ({error}).</p>
-              <button className="btn btn-gamezone" onClick={reintentar}>
-                Reintentar
-              </button>
-            </div>
-          )}
+          <EstadoCarga cargando={cargando} error={error} reintentar={reintentar} />
 
           {catalogoListo && (
-            <SearchBar productos={productos} carrito={carrito} agregarAlCarrito={agregarAlCarrito} />
+            <>
+              <FeaturedProducts productos={productos} carrito={carrito} agregarAlCarrito={agregarAlCarrito} />
+              <div className="text-center my-4">
+                <Link to="/catalogo" className="btn btn-gamezone">Ver catálogo completo →</Link>
+              </div>
+            </>
           )}
-          {catalogoListo && (
-            <FeaturedProducts productos={productos} carrito={carrito} agregarAlCarrito={agregarAlCarrito} />
-          )}
-          {catalogoListo && (
-            <ProductList
-              productos={productos}
-              carrito={carrito}
-              agregarAlCarrito={agregarAlCarrito}
-              eliminarProducto={eliminarProducto}
-            />
-          )}
+
+          {/* Seccion descubre mas juegos pendiente de implementar */}
         </main>
       </div>
 
@@ -113,7 +93,6 @@ function App() {
               carrito={carrito}
               cantidadCarrito={cantidadTotal}
               agregarAlCarrito={agregarAlCarrito}
-              eliminarProducto={esAdmin ? eliminarJuego : undefined}
             />
           }
         />
@@ -139,6 +118,21 @@ function App() {
               iniciarSesion={iniciarSesion}
               cerrarSesion={cerrarSesion}
               agregarProducto={agregarProducto}
+            />
+          }
+        />
+        <Route
+          path="/catalogo"
+          element={
+            <Catalogo
+              productos={productos}
+              cargando={cargando}
+              error={error}
+              reintentar={reintentar}
+              carrito={carrito}
+              cantidadCarrito={cantidadTotal}
+              agregarAlCarrito={agregarAlCarrito}
+              eliminarProducto={esAdmin ? eliminarJuego : undefined}
             />
           }
         />

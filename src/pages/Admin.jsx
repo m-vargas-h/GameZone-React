@@ -29,7 +29,7 @@ function Admin({ cantidadCarrito, esAdmin, iniciarSesion, cerrarSesion, agregarP
       <Navbar cantidadCarrito={cantidadCarrito} />
 
       <header>
-        <h1 className="site-title">🔒 Administración</h1>
+        <h1 className="site-title">Administración</h1>
         <p className="site-description">Gestiona el catálogo de GameZone.</p>
       </header>
 

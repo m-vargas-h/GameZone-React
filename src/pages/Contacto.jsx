@@ -54,7 +54,7 @@ function Contacto({ cantidadCarrito }) {
       <Navbar cantidadCarrito={cantidadCarrito} />
 
       <header>
-        <h1 className="site-title">📬 Contacto</h1>
+        <h1 className="site-title">Contacto</h1>
         <p className="site-description">Envíanos un mensaje y te responderemos a la brevedad.</p>
       </header>
 
