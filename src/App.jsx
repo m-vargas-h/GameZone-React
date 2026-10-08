@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useCarrito } from './hooks/useCarrito'
+import { useProductos } from './hooks/useProductos'
+import { useAdmin } from './hooks/useAdmin'
 import Navbar from './components/Navbar'
 import Carousel from './components/Carousel'
 import FeaturedProducts from './components/FeaturedProducts'
@@ -79,78 +80,23 @@ function Home({
 }
 
 function App() {
-  // Estado del catálogo: lista de productos y estados de la carga
-  const [productos, setProductos] = useState([])
-  const [cargando, setCargando] = useState(true)
-  const [error, setError] = useState(null)
-  const [intento, setIntento] = useState(0) // cambia al reintentar y vuelve a ejecutar el efecto
+  // Catálogo: carga, estados y operaciones encapsulados en el hook
+  const {
+    productos, cargando, error, reintentar, agregarProducto, eliminarProducto,
+  } = useProductos()
 
-  // Sesión de administrador simulada (se mantiene mientras dure la pestaña)
-  const [esAdmin, setEsAdmin] = useState(() => sessionStorage.getItem('gamezone-admin') === 'true')
+  // Sesión de administrador simulada
+  const { esAdmin, iniciarSesion, cerrarSesion } = useAdmin()
 
   // Carrito: estado, operaciones y persistencia encapsulados en el hook
   const {
     carrito, cantidadTotal, agregarAlCarrito, modificarCantidad, eliminarDelCarrito,
   } = useCarrito()
 
-  // Efecto secundario: cargar el catálogo desde el JSON (al montar y en cada reintento)
-  useEffect(() => {
-    const controller = new AbortController()
-
-    async function cargarProductos() {
-      try {
-        const res = await fetch(`${import.meta.env.BASE_URL}data/productos.json`, {
-          signal: controller.signal,
-        })
-        if (!res.ok) throw new Error(`Error HTTP ${res.status}`)
-        const data = await res.json()
-        setProductos(data)
-      } catch (err) {
-        // Un abort (desmontaje / StrictMode) no es un error real
-        if (err.name !== 'AbortError') setError(err.message)
-      } finally {
-        if (!controller.signal.aborted) setCargando(false)
-      }
-    }
-
-    cargarProductos()
-    return () => controller.abort() // limpieza del efecto
-  }, [intento])
-
-  // Reinicia los estados de carga y dispara de nuevo el efecto
-  function reintentar() {
-    setError(null)
-    setCargando(true)
-    setIntento((n) => n + 1)
-  }
-
-  // Agrega un juego al catálogo (id autoincremental)
-  function agregarProducto(nuevo) {
-    setProductos((prev) => {
-      const id = prev.length ? Math.max(...prev.map((p) => p.id)) + 1 : 1
-      return [...prev, { ...nuevo, id }]
-    })
-  }
-
   // Elimina un juego del catálogo y, si estaba, también del carrito
-  function eliminarProducto(id) {
-    setProductos((prev) => prev.filter((p) => p.id !== id))
+  function eliminarJuego(id) {
+    eliminarProducto(id)
     eliminarDelCarrito(id)
-  }
-
-  // Login simulado: las credenciales están en el frontend (no es seguridad real)
-  function iniciarSesion(usuario, clave) {
-    if (usuario === 'admin' && clave === 'gamezone123') {
-      setEsAdmin(true)
-      sessionStorage.setItem('gamezone-admin', 'true')
-      return true
-    }
-    return false
-  }
-
-  function cerrarSesion() {
-    setEsAdmin(false)
-    sessionStorage.removeItem('gamezone-admin')
   }
 
   return (
@@ -167,7 +113,7 @@ function App() {
               carrito={carrito}
               cantidadCarrito={cantidadTotal}
               agregarAlCarrito={agregarAlCarrito}
-              eliminarProducto={esAdmin ? eliminarProducto : undefined}
+              eliminarProducto={esAdmin ? eliminarJuego : undefined}
             />
           }
         />
