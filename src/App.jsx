@@ -14,6 +14,7 @@ import Footer from './components/Footer'
 import Contacto from './pages/Contacto'
 import CarritoPagina from './pages/CarritoPagina'
 import Admin from './pages/Admin'
+import DescubreJuegos from './components/DescubreJuegos'
 
 function Home({
   productos, cargando, error, reintentar,
@@ -50,7 +51,7 @@ function Home({
             </>
           )}
 
-          {/* Seccion descubre mas juegos pendiente de implementar */}
+          <DescubreJuegos />
         </main>
       </div>
 
